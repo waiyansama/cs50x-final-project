@@ -1,9 +1,172 @@
-{% extends "layout.html" %} 
-{% block title %}
-  Home
-{% endblock title %}
+{% extends "layout.html" %} {% block title %} Home {% endblock title %} {% block
+body %}
+<header>
+  <nav class="navbar px-3 mt-3">
+    <a class="navbar-brand text-white fw-bold" href="/" id="nav-logo"
+      >Pomodoro</a
+    >
+    <div class="navbar-expand">
+      <ul class="navbar-nav gap-3">
+        <li class="nav-item">
+          <a class="nav-link text-white btn btn-dark" role="button">
+            <img src="static/assets/icons/setting.svg" />
+            <span class="d-none">Setting</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link text-white btn btn-dark"
+            href="/logout"
+            role="button"
+          >
+            <img src="static/assets/icons/logout.svg" />
+            <span class="d-none">Logout</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</header>
+{% with messages = get_flashed_messages() %} {% if messages %} {% for message in
+messages %}
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+  {{message}}
+  <button
+    type="button"
+    class="btn-close"
+    data-bs-dismiss="alert"
+    aria-label="Close"
+  ></button>
+</div>
+{% endfor %} {% endif %} {% endwith %}
+<div class="container-fluid">
+  <div class="d-flex flex-column mt-5">
+    <div class="d-flex justify-content-between gap-2 px-sm-2">
+      <button class="btn py-2 py-sm-3 px-md-4" id="pomodoro">
+        <img
+          src="static/assets/icons/brain.svg"
+          alt="brain-icon"
+          height="28px"
+          class="d-none d-sm-inline me-sm-1"
+        />
+        <p class="text-white d-inline fw-medium fs-sm-16">Pomodoro</p>
+        <span class="text-white fw-bold fs-sm-16" id="pomodoroCounter">0</span>
+      </button>
+      <button class="btn py-2 py-sm-3 px-md-4" id="shortBreak">
+        <img
+          src="static/assets/icons/coffee.svg"
+          alt="coffee-icon"
+          height="28px"
+          class="d-none d-sm-inline me-sm-1"
+        />
+        <p class="text-white d-inline fw-medium fs-sm-16">Short Break</p>
+        <span class="text-white fw-bold fs-sm-16" id="shortBreakCounter"
+          >0</span
+        >
+      </button>
+      <button class="btn py-2 py-sm-3 px-md-4" id="longBreak">
+        <img
+          src="static/assets/icons/coffee.svg"
+          alt="coffee-icon"
+          height="28px"
+          class="d-none d-sm-inline me-sm-1"
+        />
+        <p class="text-white d-inline fw-medium fs-sm-16">Long Break</p>
+        <span class="text-white fw-bold fs-sm-16" id="longBreakCounter">0</span>
+      </button>
+    </div>
+    <div id="timer" class="align-self-center text-white fw-semibold my-5">
+      25:00
+    </div>
+    <audio id="audio">
+      <source src="static/assets/sounds/alarm-clock.mp3" type="audio/mp3" />
+    </audio>
+    <div class="d-flex gap-3 gap-sm-4 align-self-center">
+      <button
+        class="btn btn-primary py-2 py-sm-3 px-sm-4"
+        type="button"
+        id="start"
+      >
+        <img
+          src="static/assets/icons/start.svg"
+          alt="start-icon"
+          width="18px"
+        />
+        <p class="text-white d-inline text-uppercase fw-semibold ms-sm-2">
+          Start
+        </p>
+      </button>
+      <button
+        class="btn btn-primary py-2 py-sm-3 px-sm-4"
+        type="button"
+        id="stop"
+      >
+        <img src="static/assets/icons/stop.svg" alt="stop-icon" width="18px" />
+        <p class="text-white d-inline text-uppercase fw-semibold ms-sm-2">
+          Stop
+        </p>
+      </button>
+    </div>
+  </div>
+  <div class="d-flex flex-column mt-5 px-sm-2">
+    <div
+      class="d-flex justify-content-between align-items-center line pb-1 pb-sm-3 position-relative"
+    >
+      <h2 class="text-white fw-bold m-0" id="task">
+        Tasks <span id="totalTask">0</span>
+      </h2>
+      <button class="btn btn-dark" id="taskMenu" onclick="taskMenu()">
+        <img
+          src="static/assets/icons/dots-three-outline-fill(vertical).svg"
+          alt="vertical-three-dot"
+          height="26px"
+        />
+      </button>
+      <div class="d-none" id="taskSetting">
+        <button class="btn" onclick="hideCompletedTask()">
+          <img
+            src="static/assets/icons/hide.svg"
+            height="24px"
+            class="align-self-start"
+          />
+          <span class="me-2"> Hide completed tasks </span>
+        </button>
+        <button class="btn" onclick="showCompletedTask()">
+          <img
+            src="static/assets/icons/show.svg"
+            height="24px"
+            class="align-self-start"
+          />
+          <span> Show completed tasks </span>
+        </button>
+      </div>
+    </div>
+    <div id="taskListContainer" class="d-flex flex-column mt-1"></div>
 
-
-{% block main %}
-<h1>Hello World!</h1>
-{% endblock main %}
+    <div class="d-none" id="addContainer">
+      <form class="container-fluid mt-3">
+        <input
+          class="form-control"
+          type="text"
+          id="taskItem"
+          name="task"
+          placeholder="What are you working on?"
+          aria-label="What are you working on?"
+        />
+        <div class="d-flex gap-3">
+          <button type="submit" class="btn btn-primary mt-3" id="saveButton">
+            Save
+          </button>
+          <button class="btn btn-light mt-3" id="closeButton">Cancel</button>
+        </div>
+      </form>
+    </div>
+    <div class="d-grid mt-4">
+      <button class="btn btn-outline-secondary text-white py-2" id="add">
+        <img src="static/assets/icons/add.svg" height="24px" />
+        <span class="text-white fs-16 fw-bold">Add Task</span>
+      </button>
+    </div>
+  </div>
+  {% endblock body %}
+</div>

@@ -1,0 +1,93 @@
+* {
+  font-family: "Poppins", sans-serif;
+  /* font-family: "Roboto Flex", sans-serif; */
+}
+
+.line {
+  border-bottom: 2px solid white;
+}
+
+#nav-logo {
+  font-size: 1.75rem;
+}
+
+#pomodoro {
+  background-color: #b93737;
+}
+
+#shortBreak {
+  background-color: #328c46;
+}
+
+#longBreak {
+  background-color: #316ea3;
+}
+
+#timer {
+  font-size: 64px;
+}
+
+#pomodoro,
+#shortBreak,
+#longBreak {
+  font-size: 14px;
+}
+
+#task {
+  font-size: 1.5rem;
+}
+
+.fs-16 {
+  font-size: 1rem;
+}
+
+#taskSetting {
+  top: 85%;
+}
+
+@media (min-width: 576px) {
+  #nav-logo {
+    font-size: 2rem;
+  }
+  .fs-sm-16 {
+    font-size: 1rem;
+  }
+
+  .fs-sm-20 {
+    font-size: 20px;
+  }
+  #timer {
+    font-size: 72px;
+  }
+
+  #start img,
+  #stop img {
+    width: 24px;
+  }
+
+  #start p,
+  #stop p {
+    font-size: 1.25rem;
+  }
+
+  #task {
+    font-size: 2rem;
+  }
+
+  #taskMenu img {
+    height: 32px;
+  }
+
+  #taskSetting {
+    top: 80%;
+  }
+
+  .sm-w32 {
+    width: 2rem;
+  }
+
+  .max-w {
+    max-width: 750px;
+    margin: 0 auto;
+  }
+}
