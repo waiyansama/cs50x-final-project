@@ -1,8 +1,8 @@
-CS50x Final Project
+# Harvard's CS50X Final Project Pomodoro Timer App
 
-# CS50X Final Project Pomodoro Timer App
+#### Video Demo: https://youtu.be/U_03vg3r1oA
 
-### This is Harvard’s cs50x final project.
+#### Website url: http://waiyansama.pythonanywhere.com
 
 ## Introduction
 
